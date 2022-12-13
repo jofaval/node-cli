@@ -15,11 +15,12 @@
     "copy-dir": "echo TODO: implement",
     "create-template": "echo TODO: implement",
     "make:from": "echo TODO: implement from template",
-    "component": "pnpm run make:from component",
-    "container": "pnpm run make:from container",
-    "service": "pnpm run make:from service",
-    "model": "pnpm run make:from model",
-    "controller": "pnpm run make:from controller"
+    "component": "pnpm run make:from --template=component",
+    "container": "pnpm run make:from --template=container",
+    "service": "pnpm run make:from --template=service",
+    "model": "pnpm run make:from --template=model",
+    "controller": "pnpm run make:from --template=controller",
+    "type-safe": "node ./scripts/type-safe.mjs"
   },
   "keywords": [],
   "author": "",
