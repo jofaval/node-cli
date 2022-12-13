@@ -16,7 +16,7 @@ const SPECIAL_ARG_STARTER = "--";
 /**
  * Combines with the `SPECIAL_ARG_STARTER` literal
  *
- * In example: `--baseRoute`**`=`**`./`
+ * In example: `"--baseRoute`**`=`**`./"`
  */
 const KEY_VALUE_SEPARATOR = "=";
 
@@ -44,6 +44,7 @@ export function parseArgs({ includeOrigin } = {}) {
 
     // --[name]=[value] will be parsed to key:value, could be overwritteable
     const [name, value] = arg
+      // only the first instance should be replaced, it may appear in the value
       .replace(SPECIAL_ARG_STARTER, "")
       .split(KEY_VALUE_SEPARATOR);
 

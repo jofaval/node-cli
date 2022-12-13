@@ -22,7 +22,7 @@
     "service": "pnpm run make:from --template=service",
     "model": "pnpm run make:from --template=model",
     "controller": "pnpm run make:from --template=controller",
-    "type-safe": "node ./scripts/type-safe.mjs --baseRoute=Test",
+    "type-safe": "node ./scripts/type-safe.mjs \"--baseRoute=Complex Test\"",
     "build:scripts": "tsc --strict -p .",
     "watch:scripts": "pnpm run build:scripts -w"
   },
