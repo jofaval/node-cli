@@ -7,7 +7,8 @@
     "hello-world": "echo Hello World!",
     "js-hello-world": "node ./scripts/js-hello-world.js",
     "concatenate": "pnpm run js-hello-world && echo Concatenation",
-    "with-imports": "node ./scripts/with-imports.mjs"
+    "with-imports": "node ./scripts/with-imports.mjs",
+    "args-parser": "node ./scripts/args-parser.mjs 1 2 --specialArg=test --flag 3"
   },
   "keywords": [],
   "author": "",
