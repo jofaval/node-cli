@@ -17,11 +17,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
-    "baseUrl": "scripts",
-    "paths": {
-      "*": ["./types/*"]
-    },
-    "types": ["./types/index.d.ts"]
+    "baseUrl": "scripts"
   },
   "include": ["scripts", "core/args-parser.d.ts", "core/args-parser.d.ts"]
 }

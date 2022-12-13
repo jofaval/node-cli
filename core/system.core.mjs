@@ -4,15 +4,15 @@ import { exec } from "node:child_process";
  * Executes the given command in the shell, a callback can be passed to process the output
  *
  * @param {string} command
- * @param {function?} callable
  * @param {{
+ *  callable?: function
  *  logError?: boolean
  *  logOutput?: boolean
  * }} options
  *
  * @returns {void}
  */
-export function cmd(command, callable, { logError, logOutput } = {}) {
+export function cmd(command, callable, { logError, logOutput, callable } = {}) {
   exec(command, (error, output) => {
     if (error) {
       if (logError) {

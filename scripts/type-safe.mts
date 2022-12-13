@@ -1,16 +1,11 @@
 import { parseArgs } from "../core/args.core.mjs";
 
 type Args = {
-  /** The transpiler used, usually node, might be Deno, or Bun */
-  transpilerPath: string;
-  /** The source file origin */
-  scriptPath: string;
-
   /** The route from which to start processing */
-  baseRoute?: string;
+  baseRoute: string;
 };
 
-const parsed: Args = parseArgs();
+const parsed = parseArgs<Args>();
 
 // Type-safe arg
 parsed.baseRoute;
