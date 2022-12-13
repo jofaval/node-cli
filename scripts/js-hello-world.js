@@ -16,4 +16,5 @@ function cmd(command) {
   });
 }
 
+// Doesn't show anything because it spawns in a child process
 cmd("echo Hello World!");
