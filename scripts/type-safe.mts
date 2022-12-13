@@ -7,10 +7,12 @@ type Args = {
   scriptPath: string;
 
   /** The route from which to start processing */
-  baseRoute: string;
+  baseRoute?: string;
 };
 
 const parsed: Args = parseArgs();
 
 // Type-safe arg
 parsed.baseRoute;
+
+console.log(parsed.baseRoute);

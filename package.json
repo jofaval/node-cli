@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Dummy CLI example of usage",
   "main": "index.js",
+  "type": "module",
+  "types": "./types/index.d.ts",
   "scripts": {
     "404": "echo Script doesn't exist, example error && node ./scripts/i-don't-exist.mjs",
     "hello-world": "echo Hello World!",
@@ -20,8 +22,9 @@
     "service": "pnpm run make:from --template=service",
     "model": "pnpm run make:from --template=model",
     "controller": "pnpm run make:from --template=controller",
-    "type-safe": "node ./scripts/type-safe.mjs",
-    "buid:scripts": ""
+    "type-safe": "node ./scripts/type-safe.mjs --baseRoute=Test",
+    "build:scripts": "tsc --strict -p .",
+    "watch:scripts": "pnpm run build:scripts -w"
   },
   "keywords": [],
   "author": "",
