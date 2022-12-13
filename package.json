@@ -6,7 +6,8 @@
   "scripts": {
     "hello-world": "echo Hello World!",
     "js-hello-world": "node ./scripts/js-hello-world.js",
-    "concatenate": "pnpm run js-hello-world && echo Concatenation"
+    "concatenate": "pnpm run js-hello-world && echo Concatenation",
+    "with-imports": "node ./scripts/with-imports.mjs"
   },
   "keywords": [],
   "author": "",
