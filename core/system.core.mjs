@@ -31,3 +31,27 @@ export function cmd(command, callable, { logError, logOutput, callable } = {}) {
     }
   });
 }
+
+/**
+ * @param {string} origin
+ * @param {string} target
+ * @returns {boolean}
+ */
+export function copyDir(origin, target) {
+  try {
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+/**
+ * @param {string} filepath
+ * @param {String} haystack
+ * @param {string} needle
+ * @returns {void}
+ */
+export function replace(filepath, haystack, needle) {
+  // TODO: implement
+}
