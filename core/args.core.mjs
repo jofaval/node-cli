@@ -21,13 +21,18 @@ const SPECIAL_ARG_STARTER = "--";
 const KEY_VALUE_SEPARATOR = "=";
 
 /**
+ * @param {{
+ *  includeOrigin?: boolean
+ * }} options
  * @returns {Object}
  */
-export function parseArgs() {
+export function parseArgs({ includeOrigin } = {}) {
   const cliArgs = getArgs();
 
   const [transpilerPath, scriptPath, ...args] = cliArgs;
-  const parsedArgs = { transpilerPath, scriptPath };
+  const parsedArgs = {
+    ...(includeOrigin ? { transpilerPath, scriptPath } : {}),
+  };
 
   let actualIndex = 0;
   for (const arg of args) {
