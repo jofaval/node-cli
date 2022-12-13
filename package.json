@@ -20,9 +20,13 @@
     "service": "pnpm run make:from --template=service",
     "model": "pnpm run make:from --template=model",
     "controller": "pnpm run make:from --template=controller",
-    "type-safe": "node ./scripts/type-safe.mjs"
+    "type-safe": "node ./scripts/type-safe.mjs",
+    "buid:scripts": ""
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^4.9.4"
+  }
 }
