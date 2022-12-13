@@ -10,7 +10,16 @@
     "concatenate": "pnpm run js-hello-world && echo Concatenation",
     "with-imports": "node ./scripts/with-imports.mjs",
     "args-parser": "node ./scripts/args-parser.mjs 1 2 --specialArg=test --flag 3",
-    "ez-write": "node ./scripts/ez-write-to-file.mjs"
+    "ez-write": "node ./scripts/ez-write-to-file.mjs",
+    "write": "echo TODO: implement",
+    "copy-dir": "echo TODO: implement",
+    "create-template": "echo TODO: implement",
+    "make:from": "echo TODO: implement from template",
+    "component": "pnpm run make:from component",
+    "container": "pnpm run make:from container",
+    "service": "pnpm run make:from service",
+    "model": "pnpm run make:from model",
+    "controller": "pnpm run make:from controller"
   },
   "keywords": [],
   "author": "",
