@@ -23,12 +23,18 @@
     "type-safe": "node ./scripts/type-safe.mjs \"--baseRoute=Complex Test\"",
     "scripts:build": "tsc --strict -p .",
     "scripts:watch": "pnpm run scripts:build -w",
-    "hello-name": "node ./scripts/hello-name.mjs"
+    "hello-name": "node ./scripts/hello-name.mjs",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "typescript": "^4.9.4"
+  },
+  "devDependencies": {
+    "@vitest/coverage-c8": "^0.25.8",
+    "vitest": "^0.25.8"
   }
 }
