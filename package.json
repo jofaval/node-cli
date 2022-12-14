@@ -25,7 +25,9 @@
     "scripts:watch": "pnpm run scripts:build -w",
     "hello-name": "node ./scripts/hello-name.mjs",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "faster-tsc": "sh ./scripts/faster-tsc.sh",
+    "current": "date.exe +\"%Y%m%d %H%M%S\""
   },
   "keywords": [],
   "author": "",

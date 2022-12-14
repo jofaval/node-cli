@@ -38,3 +38,13 @@ pnpm run [script] [...args] # or npm or yarn
 ## Examples
 
 [Back to the contents](#contents)
+
+### Templates
+
+### Typesafety
+
+### Tested cli interactions
+
+### Automation tricks
+
+#### "Faster" typecheck and logging the result
