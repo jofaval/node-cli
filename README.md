@@ -7,6 +7,11 @@ The only requirement is that you have some basic knowledge of programming fundam
 1. [What does this provide?](#what-does-this-provide)
 1. [Configuration and setup](#configuration-and-setup)
 1. [Examples](#examples)
+   1. [Templates](#templates)
+   1. [Typesafety](#typesafety)
+   1. [Tested cli interactions](#tested-cli-interactions)
+   1. [Automation tricks](#automation-tricks)
+      1. ["Faster" typecheck and logging the result](#faster-typecheck-and-logging-the-result)
 
 ## What does this provide?
 
@@ -41,10 +46,50 @@ pnpm run [script] [...args] # or npm or yarn
 
 ### Templates
 
+[Back to the examples](#examples)
+
+Creating almost similar structures by copying and pasting folders is prone to error, mistakes, or simply, oversights.
+Automating that process can be crucial in bigger apps with more complex structure, even more so if the architecture is complex and you want to assure quality.
+
+You can do so by defining templates, and how you'd like them to interact with, what should be done before creating them, and after.
+
+Different frameworks use different files, extensions, structures, and projects and teams define the overarching architecture of it's elements, thus, it's up to you how the structure should actually be implemented.
+
+You can even add different set of (initially failing) tests, services, queries and many more...
+
 ### Typesafety
+
+[Back to the examples](#examples)
+
+It's easy to fall under the pit of writting scripts in pure javascript, or commonjs, and variants. It's not a bad thing _per se_ but it could be improved, and it should on bigger CLIs.
+
+Typesafety could be achieved by simplify transpiling the content. I'd recomend using `.mts` that would transpile to `.mjs`, as to maximize the JS ecosystem in newer versions and be able to import/export utilities.
+
+In case the utilities you're using are in Javascript, and migrating them might be too much, you could **declare** it's content with a module declaration file (`.js` -> `.d.ts`, `.cjs` -> `.d.cts`, `.mjs` -> `.d.mts`).
 
 ### Tested cli interactions
 
+[Back to the examples](#examples)
+
+At times we write code, that we don't test, and we should. CLIs are no exception and actually are a great use case and example.
+
+Not everything in a CLI should be tested, i.e. saving a file, you'd be testing the actual system, but you could check the contents of that file looking for some specific change, even though it would be "slower", it could be necessary.
+
 ### Automation tricks
 
+[Back to the examples](#examples)
+
+Manually saving the output to a log, checking some details about the system (referent to the project), a custom update script
+
 #### "Faster" typecheck and logging the result
+
+[Back to the automation tricks](#automation-tricks)
+
+It's not really faster, literally, but it will seem like it, instead of visually logging the output, just save it into a file, it's almost always much faster.
+Plus, the advantage of having a log file you can always check as a point of reference
+
+```bash
+pnpm run faster-tsc
+```
+
+It will generate a log with the typescript errors, if any
