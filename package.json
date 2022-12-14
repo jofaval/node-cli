@@ -11,7 +11,7 @@
     "with-imports": "node ./scripts/with-imports.mjs",
     "args-parser": "node ./scripts/args-parser.mjs 1 2 --specialArg=test --flag 3",
     "ez-write": "node ./scripts/ez-write-to-file.mjs",
-    "write": "echo TODO: implement",
+    "write": "node ./scripts/write-to-file.mjs",
     "copy-dir": "echo TODO: implement",
     "create-template": "echo TODO: implement",
     "make:from": "echo TODO: implement from template",
@@ -27,7 +27,9 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "faster-tsc": "sh ./scripts/faster-tsc.sh",
-    "current": "date.exe +\"%Y%m%d %H%M%S\""
+    "current": "date.exe +\"%Y%m%d %H%M%S\"",
+    "ez-read-file": "cat ./examples/file-read/foo-bar.txt",
+    "read-file": "node ./scripts/read-file.mjs"
   },
   "keywords": [],
   "author": "",
