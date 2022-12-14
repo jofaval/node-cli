@@ -10,6 +10,7 @@ declare type OriginArgs = {
   scriptPath?: string;
 };
 
+// It'd be cool that if props.includeOrigin is set to false, OriginArgs wasn't added
 export function parseArgs<TArgs = Record<string, unknown>>(
   props?: ParseArgsProps
 ): OriginArgs & Partial<TArgs>;

@@ -50,7 +50,7 @@ pnpm run [script] [...args] # or npm or yarn
 
 [Back to the examples](#examples)
 
-My recomended script order:
+My recommended script order:
 
 1. [JS Hello world](./scripts/js-hello-world.js)
 1. [With imports](./scripts/with-imports.mjs)
@@ -75,13 +75,19 @@ Different frameworks use different files, extensions, structures, and projects a
 
 You can even add different set of (initially failing) tests, services, queries and many more...
 
+```bash
+pnpm run make:from --template=components --name=always-use-kebab-case
+```
+
+It would be highly recommended to make the default case be `kebab-case`, `serpent_case` could be the only other candidate that could also assure consistency.
+
 ### Typesafety
 
 [Back to the examples](#examples)
 
-It's easy to fall under the pit of writting scripts in pure javascript, or commonjs, and variants. It's not a bad thing _per se_ but it could be improved, and it should on bigger CLIs.
+It's easy to fall under the pit of writing scripts in pure javascript, or commonjs, and variants. It's not a bad thing _per se_ but it could be improved, and it should on bigger CLIs.
 
-Typesafety could be achieved by simplify transpiling the content. I'd recomend using `.mts` that would transpile to `.mjs`, as to maximize the JS ecosystem in newer versions and be able to import/export utilities.
+Typesafety could be achieved by simplify transpiling the content. I'd recommend using `.mts` that would transpile to `.mjs`, as to maximize the JS ecosystem in newer versions and be able to import/export utilities.
 
 In case the utilities you're using are in Javascript, and migrating them might be too much, you could **declare** it's content with a module declaration file (`.js` -> `.d.ts`, `.cjs` -> `.d.cts`, `.mjs` -> `.d.mts`).
 

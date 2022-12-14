@@ -1,4 +1,6 @@
 import { exec, spawn } from "node:child_process";
+import { writeFileSync, readFileSync } from "fs";
+import { moveSync } from "fs-extra";
 
 /**
  * Executes the given command in the shell, a callback can be passed to process the output
@@ -65,13 +67,13 @@ export function spawnCmd(
 
   spawned.on("error", (error) => {
     if (onError) {
-      onError(data);
+      onError(error);
     }
   });
 
   spawned.on("close", (code) => {
     if (onClose) {
-      onClose(data);
+      onClose(code);
     }
   });
 }
@@ -83,6 +85,7 @@ export function spawnCmd(
  */
 export function copyDir(origin, target) {
   try {
+    moveSync(origin, target, { overwrite: true | false });
     return true;
   } catch (error) {
     console.error(error);
@@ -97,5 +100,9 @@ export function copyDir(origin, target) {
  * @returns {void}
  */
 export function replace(filepath, haystack, needle) {
-  // TODO: implement
+  const content = readFileSync(filepath, { encoding: "utf-8" })
+    .toString()
+    .replaceAll(haystack, needle);
+
+  writeFileSync(filepath, content, { encoding: "utf-8" });
 }
