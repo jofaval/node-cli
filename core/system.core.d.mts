@@ -12,6 +12,23 @@ type CmdOptions = {
  */
 declare function cmd(command: string, options?: CmdOptions): void;
 
+type SpawnCmdOptions = {
+  /** On output success */
+  onStdout?: (data: any) => void;
+  /** On output error */
+  onStderr?: (data: any) => void;
+  /** On general error */
+  onError?: (error: Error) => void;
+  /** Return code if any */
+  onClose?: (code: number | null) => void;
+};
+
+declare function spawnCmd(
+  command: string,
+  args?: string[],
+  options?: SpawnCmdOptions
+): void;
+
 /**
  * Recursively copies one dir to another
  */
