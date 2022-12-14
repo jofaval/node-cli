@@ -13,6 +13,7 @@ The only requirement is that you have some basic knowledge of programming fundam
    1. [Tested cli interactions](#tested-cli-interactions)
    1. [Automation tricks](#automation-tricks)
       1. ["Faster" typecheck and logging the result](#faster-typecheck-and-logging-the-result)
+1. [Tech stack and requirements](#tech-stack-and-requirements)
 
 ## What does this provide?
 
@@ -110,3 +111,19 @@ pnpm run faster-tsc
 ```
 
 It will generate a log with the typescript errors, if any
+
+## Tech stack and requirements
+
+[Back to the contents](#contents)
+
+Tech stack:
+
+- Node
+- Typescript
+- Vitest (testing) and coverage packs
+
+Requirements:
+
+- Node v18.5.0
+- NPM 8.12.1 (not used directly)
+- PNPM 7.18.1 (Node Agent, should also work with NPM and YARN)
