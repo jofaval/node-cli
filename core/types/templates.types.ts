@@ -3,7 +3,9 @@ export enum Template {
   CONTAINER = "container",
   CONTROLLER = "controller",
   MODEL = "model",
+  ROUTE = "routes",
   SERVICE = "service",
+  VIEW = "views",
 }
 
 export const TemplatesTargetDirs = {
@@ -11,7 +13,9 @@ export const TemplatesTargetDirs = {
   [Template.CONTAINER]: "container",
   [Template.CONTROLLER]: "controller",
   [Template.MODEL]: "model",
+  [Template.ROUTE]: "routes",
   [Template.SERVICE]: "service",
+  [Template.VIEW]: "views",
 } as const;
 
 export const CaseDictionary = {
