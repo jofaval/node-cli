@@ -7,6 +7,7 @@ The only requirement is that you have some basic knowledge of programming fundam
 1. [What does this provide?](#what-does-this-provide)
 1. [Configuration and setup](#configuration-and-setup)
 1. [Examples](#examples)
+   1. [Introduction](#introduction)
    1. [Templates](#templates)
    1. [Typesafety](#typesafety)
    1. [Tested cli interactions](#tested-cli-interactions)
@@ -43,6 +44,22 @@ pnpm run [script] [...args] # or npm or yarn
 ## Examples
 
 [Back to the contents](#contents)
+
+### Introduction
+
+[Back to the examples](#examples)
+
+My recomended script order:
+
+1. [JS Hello world](./scripts/js-hello-world.js)
+1. [With imports](./scripts/with-imports.mjs)
+1. [Hello name](./scripts/hello-name.mjs)
+1. [CLI Args parser](./scripts/args-parser.mjs)
+1. [EZ Write to file](./scripts/ez-write-to-file.mjs)
+1. [Write to file](./scripts/write-to-file.mjs)
+1. [Faster TSC](./scripts/faster-tsc.sh)
+1. [Type safe](./scripts/type-safe.mts)
+1. [Hello name with TypeScript](./scripts/hello-name.mts)
 
 ### Templates
 
