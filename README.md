@@ -28,7 +28,7 @@ This is meant to show the possibilities and provide some pieces of the bigger pi
 
 [Back to the contents](#contents)
 
-I'm using `pnpm`, npm or yarn will also do the job.
+I'm using [`pnpm`](https://pnpm.io/es/), [`npm`](https://www.npmjs.com/) or [`yarn`](https://yarnpkg.com/) will also do the job.
 
 You don't have to, but typescript is installed, and for the complete run, you'll have to install it, you can do so by:
 
