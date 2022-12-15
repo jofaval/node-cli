@@ -10,9 +10,7 @@ import {
 } from "services/kebab-case";
 
 // useQuery-like wrapper, use React(TanStack) Query better
-export const useFetch = <TData = any>(
-  fetcher: () => Promise<FetchAbort<TData>>
-) => {
+export const useFetch = <TData = any>(fetcher: () => FetchAbort<TData>) => {
   const [data, setData] = useState<TData | null>(null);
   const [error, setError] = useState<Error>();
   const [isLoading, setIsLoading] = useState(false);
@@ -20,18 +18,18 @@ export const useFetch = <TData = any>(
   const mutate = (data: TData) => setData(data);
 
   useEffect(() => {
-    let cleanup = () => {};
-    setIsLoading(false);
+    setIsLoading(true);
 
-    fetcher()
-      .then(({ data, onCleanup }) => {
-        setData(data);
-        cleanup = onCleanup;
-      })
+    const { getData, onCleanup } = fetcher();
+
+    getData()
+      .then(setData)
       .catch(setError)
-      .finally(() => setIsLoading(true));
+      .finally(() => setIsLoading(false));
 
-    return () => cleanup();
+    return () => {
+      onCleanup();
+    };
   }, [fetcher]);
 
   return { data, error, isLoading, mutate };

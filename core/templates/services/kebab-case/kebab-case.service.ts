@@ -1,5 +1,5 @@
 export type FetchAbort<TData = any> = {
-  data: TData | null;
+  getData: () => Promise<TData | null>;
   onCleanup: () => void;
 };
 
@@ -16,13 +16,18 @@ export async function request<TData = any>(
 ): Promise<FetchAbort<TData>> {
   const abortController = new AbortController();
 
-  const response = await fetch(url, {
+  const responsePromise = fetch(url, {
     signal: abortController.signal,
     ...options,
   });
-  const data = await response.json();
 
-  return { data, onCleanup: () => abortController.abort() };
+  return {
+    getData: async () => {
+      const response = await responsePromise;
+      return await response.json();
+    },
+    onCleanup: () => abortController.abort(),
+  };
 }
 
 export async function fetchAllPascalCase() {
