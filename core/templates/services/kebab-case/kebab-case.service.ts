@@ -1,15 +1,16 @@
-type FetchAbort<TData = any> = {
+export type FetchAbort<TData = any> = {
   data: TData | null;
   onCleanup: () => void;
 };
 
-type PascalCase = {
+export type PascalCase = {
   id: number;
 };
 
-const BASE_API_URL = "/api";
+export const BASE_API_URL = "/api";
+const BASE_UPPER_CASE_ENDPOINT = [BASE_API_URL, "kebab-case"].join("/");
 
-async function request<TData = any>(
+export async function request<TData = any>(
   url: string,
   options: RequestInit = {}
 ): Promise<FetchAbort<TData>> {
@@ -25,11 +26,11 @@ async function request<TData = any>(
 }
 
 export async function fetchAllPascalCase() {
-  return request<PascalCase[]>(`${BASE_API_URL}/kebab-case/all`);
+  return request<PascalCase[]>(`${BASE_UPPER_CASE_ENDPOINT}/all`);
 }
 
 export async function fetchSinglePascalCase({ id }: Pick<PascalCase, "id">) {
-  return request<PascalCase>(`${BASE_API_URL}/kebab-case/${id}`);
+  return request<PascalCase>(`${BASE_UPPER_CASE_ENDPOINT}/${id}`);
 }
 
 // ...
