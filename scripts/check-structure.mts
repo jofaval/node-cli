@@ -1,1 +1,43 @@
-throw new Error("TODO: implement");
+// Args
+import { parseArgs } from "../core/args.core.mjs";
+// System
+import { getAllFiles, joinPaths } from "../core/helpers/system.helpers.js";
+// Constants
+import { TARGET_DIR } from "../core/constants/core.constants.js";
+
+type Args = {
+  /** Similar to the machine learning concept */
+  earlyStopping: boolean;
+};
+
+const { earlyStopping } = parseArgs<Args>();
+
+// It will usually be just the target dir,
+// but this is for showcasing purposes
+const structureTargetDir = joinPaths(TARGET_DIR);
+
+const files = getAllFiles(structureTargetDir);
+
+const checkMethod = earlyStopping ? "find" : "filter";
+type TInvalidFiles = string | string[] | undefined;
+const invalidFiles: TInvalidFiles = files[checkMethod](
+  doesFileHaveInvalidStructure
+);
+const logInvalid = (file: string): void => {
+  console.warn(`[WARNING] "${file}" was detected as an invalid file`);
+};
+
+if (Array.isArray(invalidFiles)) {
+  invalidFiles.forEach(logInvalid);
+} else if (invalidFiles) {
+  logInvalid(invalidFiles);
+} else {
+  console.log("Everything is up to the standard's structure. Nice job!");
+}
+
+function doesFileHaveInvalidStructure(file: string): boolean {
+  throw new Error("TODO: implement");
+  // TODO: get the template to evaluate
+  // TODO: evaluate a good nesting structure
+  return true;
+}

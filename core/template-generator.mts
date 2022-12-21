@@ -2,19 +2,19 @@
 import {
   existsSync,
   mkdirSync,
-  readdirSync,
   readFileSync,
-  statSync,
   unlinkSync,
   writeFileSync,
 } from "fs";
 import fsExtraPkg from "fs-extra";
-import path from "path";
 // Constants
 import { TARGET_DIR, TEMPLATES_DIR } from "./constants/core.constants.js";
 // Helpers
-import { joinPaths } from "./helpers/system.helpers.js";
-import { CaseDictionaryTransformer } from "./helpers/case.helpers.mjs";
+import { getAllFiles, joinPaths } from "./helpers/system.helpers.js";
+import {
+  CaseDictionaryTransformer,
+  replaceCasingPlaceholders,
+} from "./helpers/case.helpers.mjs";
 // Types
 import {
   CaseDictionary,
@@ -49,35 +49,6 @@ export function generateDirs({
   const targetDir = joinPaths(__dirname, "..", baseDir, targetFolder);
 
   return { templateDir, targetDir };
-}
-
-export function replaceCasingPlaceholders(
-  content: string,
-  name: string
-): string {
-  return Object.values(CaseDictionary).reduce((text, _case) => {
-    return text.replaceAll(_case, CaseDictionaryTransformer[_case](name));
-  }, content);
-}
-
-/**
- * @source https://coderrocketfuel.com/article/recursively-list-all-the-files-in-a-directory-using-node-js
- */
-function getAllFiles(dirPath: string, arrayOfFiles: string[]): string[] {
-  const files = readdirSync(dirPath);
-
-  arrayOfFiles = arrayOfFiles || [];
-
-  files.forEach((file) => {
-    const newPathName = path.join(dirPath, "/", file);
-    if (statSync(dirPath + "/" + file).isDirectory()) {
-      arrayOfFiles = getAllFiles(newPathName, arrayOfFiles);
-    } else {
-      arrayOfFiles.push(newPathName);
-    }
-  });
-
-  return arrayOfFiles;
 }
 
 export function replaceCasesInFilesAndFolders(targetDir: string, name: string) {

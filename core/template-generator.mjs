@@ -1,14 +1,13 @@
 // Vendors
-import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, unlinkSync, writeFileSync, } from "fs";
+import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync, } from "fs";
 import fsExtraPkg from "fs-extra";
-import path from "path";
 // Constants
 import { TARGET_DIR, TEMPLATES_DIR } from "./constants/core.constants.js";
 // Helpers
-import { capitalizeArray } from "./helpers/strings.helpers.js";
-import { joinPaths } from "./helpers/system.helpers.js";
+import { getAllFiles, joinPaths } from "./helpers/system.helpers.js";
+import { replaceCasingPlaceholders, } from "./helpers/case.helpers.mjs";
 // Types
-import { CaseDictionary, TemplatesTargetDirs, } from "./types/templates.types.js";
+import { TemplatesTargetDirs, } from "./types/templates.types.js";
 // System
 import { copyDir, getCurrentPath } from "./system.core.mjs";
 // Manual import
@@ -20,60 +19,6 @@ export function generateDirs({ template, srcDir = null, }) {
     const baseDir = srcDir ?? TARGET_DIR;
     const targetDir = joinPaths(__dirname, "..", baseDir, targetFolder);
     return { templateDir, targetDir };
-}
-const WORD_SEPARATOR = "-";
-export function toCamelCase(name) {
-    const pascalCase = capitalizeArray(name.split(WORD_SEPARATOR));
-    return (pascalCase[0]?.toLocaleLowerCase() ?? "") + pascalCase.slice(1);
-}
-export function toKebabCase(name) {
-    // this one should be the default naming
-    return name;
-}
-export function toLowerCase(name) {
-    return name.split(WORD_SEPARATOR).join("").toLocaleLowerCase();
-}
-export function toPascalCase(name) {
-    return capitalizeArray(name.split(WORD_SEPARATOR));
-}
-export function toSerpentCase(name) {
-    return name.split(WORD_SEPARATOR).join("_").toLocaleLowerCase();
-}
-export function toUpperCase(name) {
-    return name.split(WORD_SEPARATOR).join("_").toLocaleUpperCase();
-}
-const CaseDictionaryTransformer = {
-    [CaseDictionary.CAMEL_CASE]: toCamelCase,
-    [CaseDictionary.KEBAB_CASE]: toKebabCase,
-    [CaseDictionary.LOWER_CASE]: toLowerCase,
-    [CaseDictionary.PASCAL_CASE]: toPascalCase,
-    [CaseDictionary.SERPENT_CASE]: toSerpentCase,
-    [CaseDictionary.UPPER_CASE]: toUpperCase,
-};
-export function sanitize(name) {
-    return encodeURI(name);
-}
-export function replaceCasingPlaceholders(content, name) {
-    return Object.values(CaseDictionary).reduce((text, _case) => {
-        return text.replaceAll(_case, CaseDictionaryTransformer[_case](name));
-    }, content);
-}
-/**
- * @source https://coderrocketfuel.com/article/recursively-list-all-the-files-in-a-directory-using-node-js
- */
-function getAllFiles(dirPath, arrayOfFiles) {
-    const files = readdirSync(dirPath);
-    arrayOfFiles = arrayOfFiles || [];
-    files.forEach((file) => {
-        const newPathName = path.join(dirPath, "/", file);
-        if (statSync(dirPath + "/" + file).isDirectory()) {
-            arrayOfFiles = getAllFiles(newPathName, arrayOfFiles);
-        }
-        else {
-            arrayOfFiles.push(newPathName);
-        }
-    });
-    return arrayOfFiles;
 }
 export function replaceCasesInFilesAndFolders(targetDir, name) {
     const files = getAllFiles(targetDir, []);

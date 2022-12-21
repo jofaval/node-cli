@@ -44,3 +44,12 @@ export const CaseDictionaryTransformer = {
 export function sanitize(name: string): string {
   return encodeURI(name);
 }
+
+export function replaceCasingPlaceholders(
+  content: string,
+  name: string
+): string {
+  return Object.values(CaseDictionary).reduce((text, _case) => {
+    return text.replaceAll(_case, CaseDictionaryTransformer[_case](name));
+  }, content);
+}
