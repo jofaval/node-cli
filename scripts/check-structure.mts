@@ -32,13 +32,22 @@ const logInvalid = (file: string): void => {
   console.warn(`[WARNING] "${file}" was detected as an invalid file`);
 };
 
-if (Array.isArray(invalidFiles)) {
-  invalidFiles.forEach(logInvalid);
-} else if (invalidFiles) {
-  logInvalid(invalidFiles);
-} else {
-  console.log("Everything is up to the standard's structure. Nice job!");
-}
+(() => {
+  if (!invalidFiles) {
+    console.log("Everything is up to the standard's structure. Nice job!");
+    return;
+  }
+
+  if (Array.isArray(invalidFiles)) {
+    invalidFiles.forEach(logInvalid);
+  } else {
+    logInvalid(invalidFiles);
+  }
+
+  throw new Error(
+    "Some file(s) were dismissed as not following the correct structure, please check the output above for more details"
+  );
+})();
 
 function doesFileHaveInvalidStructure(file: string): boolean {
   throw new Error("TODO: implement");
