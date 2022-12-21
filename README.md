@@ -13,6 +13,7 @@ The only requirement is that you have some basic knowledge of programming fundam
    1. [Tested cli interactions](#tested-cli-interactions)
    1. [Automation tricks](#automation-tricks)
       1. ["Faster" typecheck and logging the result](#faster-typecheck-and-logging-the-result)
+      1. [Check structure](#check-structure)
 1. [Tech stack and requirements](#tech-stack-and-requirements)
 
 ## What does this provide?
@@ -117,6 +118,23 @@ pnpm run faster-tsc
 ```
 
 It will generate a log with the typescript errors, if any
+
+#### Check structure
+
+[Back to the automation tricks](#automation-tricks)
+
+We can also automate the validity of our structure, it can actually make PRs/MRs easier to check, since it's one less thing to worry about.
+
+```bash
+pnpm run check-structure
+```
+
+This will throw an exception if something's not valid.\
+If you don't want to wait for every file to be checked and just want to see if at least one is wrong, `earlyStopping` comes to the rescue!
+
+```bash
+pnpm run check-structure --earlyStopping
+```
 
 ## Tech stack and requirements
 
