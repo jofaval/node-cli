@@ -4,10 +4,11 @@ import {
   mkdirSync,
   readdirSync,
   readFileSync,
-  rename,
+  renameSync,
   statSync,
   writeFileSync,
 } from "fs";
+import path from "path";
 // Constants
 import {
   DIRECTORY_SEPARATOR,
@@ -22,11 +23,8 @@ import {
   Template,
   TemplatesTargetDirs,
 } from "./types/templates.types.js";
+// System
 import { copyDir, getCurrentPath } from "./system.core.mjs";
-import pkg from "fs-extra";
-import path from "path";
-import { dir } from "console";
-const { moveSync } = pkg;
 
 export type GenerateDirsProps = {
   template: Template;
@@ -138,7 +136,7 @@ export function replaceCasesInFilesAndFolders(targetDir: string, name: string) {
     const originalPath = filename;
     const newPath = replaceCasingPlaceholders(originalPath, name);
 
-    console.log({ originalPath, newPath });
+    // console.log({ originalPath, newPath });
 
     let content = "";
     try {
@@ -150,7 +148,7 @@ export function replaceCasesInFilesAndFolders(targetDir: string, name: string) {
     }
 
     try {
-      moveSync(originalPath, newPath, { overwrite: true });
+      renameSync(originalPath, newPath);
     } catch (error) {
       console.warn("It was already moved, destination exists");
     }

@@ -1,0 +1,10 @@
+$kebab-case-background: #eee;
+$kebab-case-foreground: #0810;
+
+.kebab-case {
+    color: $kebab-case-foreground;
+    
+    .kebab-case__container {
+        background-color: $kebab-case-background;
+    }
+}

@@ -1,0 +1,10 @@
+$first-try-background: #eee;
+$first-try-foreground: #0810;
+
+.first-try {
+    color: $first-try-foreground;
+    
+    .first-try__container {
+        background-color: $first-try-background;
+    }
+}

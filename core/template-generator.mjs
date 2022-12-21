@@ -1,15 +1,14 @@
 // Vendors
-import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync, } from "fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, statSync, writeFileSync, } from "fs";
+import path from "path";
 // Constants
 import { DIRECTORY_SEPARATOR, TARGET_DIR, TEMPLATES_DIR, } from "./constants/core.constants.js";
 // Helpers
 import { capitalizeArray } from "./helpers/strings.helpers.js";
 // Types
 import { CaseDictionary, TemplatesTargetDirs, } from "./types/templates.types.js";
+// System
 import { copyDir, getCurrentPath } from "./system.core.mjs";
-import pkg from "fs-extra";
-import path from "path";
-const { moveSync } = pkg;
 export function joinPaths(...paths) {
     return [...paths].join(DIRECTORY_SEPARATOR);
 }
@@ -86,7 +85,7 @@ export function replaceCasesInFilesAndFolders(targetDir, name) {
     files.forEach((filename) => {
         const originalPath = filename;
         const newPath = replaceCasingPlaceholders(originalPath, name);
-        console.log({ originalPath, newPath });
+        // console.log({ originalPath, newPath });
         let content = "";
         try {
             content = readFileSync(originalPath, { encoding: "utf-8" });
@@ -97,7 +96,7 @@ export function replaceCasesInFilesAndFolders(targetDir, name) {
             console.error(error);
         }
         try {
-            moveSync(originalPath, newPath, { overwrite: true });
+            renameSync(originalPath, newPath);
         }
         catch (error) {
             console.warn("It was already moved, destination exists");
