@@ -136,6 +136,18 @@ If you don't want to wait for every file to be checked and just want to see if a
 pnpm run check-structure --earlyStopping
 ```
 
+You may also want to check for a flat structure validity, or that's the standard in your app, you can do so by utilizing the `flat` flag.
+
+```bash
+pnpm run check-structure --flat
+```
+
+That you can stack...
+
+```bash
+pnpm run check-structure --earlyStopping --flat
+```
+
 ## Tech stack and requirements
 
 [Back to the contents](#contents)

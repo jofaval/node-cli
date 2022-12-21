@@ -4,30 +4,38 @@ import { parseArgs } from "../core/args.core.mjs";
 import { getAllFiles, joinPaths } from "../core/helpers/system.helpers.js";
 // Constants
 import { TARGET_DIR } from "../core/constants/core.constants.js";
-
-const SpecialTypologyCases = {
-  components: ["component", "styled", "module"],
-  services: ["service", "resolver", "query"],
-} as const;
+// Core
+import { checkForInvalidFiles } from "../core/structure-validator.mjs";
 
 type Args = {
   /** Similar to the machine learning concept */
   earlyStopping: boolean;
+  /**
+   * At root level
+   * ```
+   * - components
+   * - containers
+   * - helpers
+   * - pages
+   * - routes
+   * - services
+   * ```
+   */
+  flat: boolean;
 };
 
-const { earlyStopping } = parseArgs<Args>();
+const { earlyStopping, flat } = parseArgs<Args>();
 
 // It will usually be just the target dir,
 // but this is for showcasing purposes
 const structureTargetDir = joinPaths(TARGET_DIR);
 
 const files = getAllFiles(structureTargetDir);
+const invalidFiles = checkForInvalidFiles({
+  files,
+  options: { earlyStopping, flat },
+});
 
-const checkMethod = earlyStopping ? "find" : "filter";
-type TInvalidFiles = string | string[] | undefined;
-const invalidFiles: TInvalidFiles = files[checkMethod](
-  doesFileHaveInvalidStructure
-);
 const logInvalid = (file: string): void => {
   console.warn(`[WARNING] "${file}" was detected as an invalid file`);
 };
@@ -48,12 +56,3 @@ const logInvalid = (file: string): void => {
     "Some file(s) were dismissed as not following the correct structure, please check the output above for more details"
   );
 })();
-
-function doesFileHaveInvalidStructure(file: string): boolean {
-  throw new Error("TODO: implement");
-  // TODO: get the template to evaluate
-  // TODO: evaluate a good nesting structure
-  // TODO: detect and evaluate the typology,
-  // it should have one, and of length 3 (when splitted)
-  return true;
-}
