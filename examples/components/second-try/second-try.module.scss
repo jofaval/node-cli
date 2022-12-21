@@ -1,0 +1,10 @@
+$second-try-background: #eee;
+$second-try-foreground: #0810;
+
+.second-try {
+    color: $second-try-foreground;
+    
+    .second-try__container {
+        background-color: $second-try-background;
+    }
+}

@@ -187,6 +187,16 @@ export function makeFromTemplate({
 }: MakeFromTemplateProps) {
   const { templateDir, targetDir } = generateDirs({ template, srcDir });
 
+  if (!existsSync(templateDir)) {
+    throw new Error(
+      [
+        "This template does not exist, you can create it via:",
+        `mkdir ./core/templates/${template}`,
+        "",
+      ].join("\n")
+    );
+  }
+
   const success = copyDir(templateDir, targetDir);
 
   if (success) {

@@ -1,4 +1,4 @@
-export type FirstTry = {
+export type SecondTry = {
   id: number;
   // ...
 };

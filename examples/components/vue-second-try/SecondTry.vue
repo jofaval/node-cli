@@ -1,6 +1,6 @@
 <template>
-  <div class="first-try__container">
-    <div class="first-try">
+  <div class="second-try__container">
+    <div class="second-try">
       <slot />
     </div>
   </div>
@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.first-try {
+.second-try {
   &__container {
   }
 }
