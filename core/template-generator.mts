@@ -13,8 +13,8 @@ import path from "path";
 // Constants
 import { TARGET_DIR, TEMPLATES_DIR } from "./constants/core.constants.js";
 // Helpers
-import { capitalizeArray } from "./helpers/strings.helpers.js";
 import { joinPaths } from "./helpers/system.helpers.js";
+import { CaseDictionaryTransformer } from "./helpers/case.helpers.mjs";
 // Types
 import {
   CaseDictionary,
@@ -49,48 +49,6 @@ export function generateDirs({
   const targetDir = joinPaths(__dirname, "..", baseDir, targetFolder);
 
   return { templateDir, targetDir };
-}
-
-const WORD_SEPARATOR = "-";
-
-export function toCamelCase(name: string): string {
-  const pascalCase = capitalizeArray(name.split(WORD_SEPARATOR));
-
-  return (pascalCase[0]?.toLocaleLowerCase() ?? "") + pascalCase.slice(1);
-}
-
-export function toKebabCase(name: string): string {
-  // this one should be the default naming
-  return name;
-}
-
-export function toLowerCase(name: string): string {
-  return name.split(WORD_SEPARATOR).join("").toLocaleLowerCase();
-}
-
-export function toPascalCase(name: string): string {
-  return capitalizeArray(name.split(WORD_SEPARATOR));
-}
-
-export function toSerpentCase(name: string): string {
-  return name.split(WORD_SEPARATOR).join("_").toLocaleLowerCase();
-}
-
-export function toUpperCase(name: string): string {
-  return name.split(WORD_SEPARATOR).join("_").toLocaleUpperCase();
-}
-
-const CaseDictionaryTransformer = {
-  [CaseDictionary.CAMEL_CASE]: toCamelCase,
-  [CaseDictionary.KEBAB_CASE]: toKebabCase,
-  [CaseDictionary.LOWER_CASE]: toLowerCase,
-  [CaseDictionary.PASCAL_CASE]: toPascalCase,
-  [CaseDictionary.SERPENT_CASE]: toSerpentCase,
-  [CaseDictionary.UPPER_CASE]: toUpperCase,
-} as const;
-
-export function sanitize(name: string): string {
-  return encodeURI(name);
 }
 
 export function replaceCasingPlaceholders(
