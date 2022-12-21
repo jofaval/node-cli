@@ -5,6 +5,11 @@ import { getAllFiles, joinPaths } from "../core/helpers/system.helpers.js";
 // Constants
 import { TARGET_DIR } from "../core/constants/core.constants.js";
 
+const SpecialTypologyCases = {
+  components: ["component", "styled", "module"],
+  services: ["service", "resolver", "query"],
+} as const;
+
 type Args = {
   /** Similar to the machine learning concept */
   earlyStopping: boolean;
@@ -39,5 +44,7 @@ function doesFileHaveInvalidStructure(file: string): boolean {
   throw new Error("TODO: implement");
   // TODO: get the template to evaluate
   // TODO: evaluate a good nesting structure
+  // TODO: detect and evaluate the typology,
+  // it should have one, and of length 3 (when splitted)
   return true;
 }
