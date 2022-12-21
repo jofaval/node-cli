@@ -1,1 +1,20 @@
-export default {};
+// Core
+import { request, endpoint } from "core/resolvers";
+// Types
+import type { PascalCase } from "../types/kebab-case.type";
+
+export function camelCaseEndpoint(...args: (string | number)[]): string {
+  return endpoint("kebab-case", ...args);
+}
+
+export const BASE_UPPER_CASE_ENDPOINT = camelCaseEndpoint();
+
+export async function fetchAllPascalCase() {
+  return request<PascalCase[]>(camelCaseEndpoint("all"));
+}
+
+export async function fetchSinglePascalCase({ id }: Pick<PascalCase, "id">) {
+  return request<PascalCase>(camelCaseEndpoint(id));
+}
+
+// ...

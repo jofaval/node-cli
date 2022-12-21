@@ -19,5 +19,6 @@ const PascalCase: FC<PascalCaseProps> = ({ children }) => {
     </PascalCaseContainer>
   );
 };
+PascalCase.displayName = "PascalCase";
 
 export default PascalCase;

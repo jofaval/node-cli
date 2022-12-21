@@ -4,10 +4,11 @@ import {
   mkdirSync,
   readdirSync,
   readFileSync,
-  renameSync,
   statSync,
+  unlinkSync,
   writeFileSync,
 } from "fs";
+import fsExtraPkg from "fs-extra";
 import path from "path";
 // Constants
 import {
@@ -25,6 +26,8 @@ import {
 } from "./types/templates.types.js";
 // System
 import { copyDir, getCurrentPath } from "./system.core.mjs";
+// Manual import
+const { moveSync } = fsExtraPkg;
 
 export type GenerateDirsProps = {
   template: Template;
@@ -148,20 +151,29 @@ export function replaceCasesInFilesAndFolders(targetDir: string, name: string) {
     }
 
     try {
-      renameSync(originalPath, newPath);
+      moveSync(originalPath, newPath);
     } catch (error) {
-      console.warn("It was already moved, destination exists");
+      // console.warn("It was already moved, destination exists");
     }
 
     try {
+      // create the dir if doesn't exists
       if (!existsSync(newPath)) {
         mkdirSync(newPath);
       }
 
       writeFileSync(newPath, content);
     } catch (error) {
-      console.log("Couldn't write to file", newPath);
+      console.warn("Couldn't write to file", newPath);
       console.error(error);
+    }
+
+    // safety measure, it should have nothing to delete, but just in case
+    try {
+      unlinkSync(originalPath);
+    } catch (error) {
+      // console.warn("Couldn't remove the original path", newPath);
+      // console.error(error);
     }
 
     return newPath;
@@ -188,4 +200,13 @@ export function makeFromTemplate({
     // if so, a comment should be added at the end of the line
     // smart addition
   }
+
+  console.log();
+  if (success) {
+    console.log("Properly copied the directory");
+  } else {
+    console.log("Something happened while trying to copy the directory");
+  }
+
+  console.log("Finished!!");
 }

@@ -1,5 +1,6 @@
 // Vendors
-import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, statSync, writeFileSync, } from "fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, unlinkSync, writeFileSync, } from "fs";
+import fsExtraPkg from "fs-extra";
 import path from "path";
 // Constants
 import { DIRECTORY_SEPARATOR, TARGET_DIR, TEMPLATES_DIR, } from "./constants/core.constants.js";
@@ -9,6 +10,8 @@ import { capitalizeArray } from "./helpers/strings.helpers.js";
 import { CaseDictionary, TemplatesTargetDirs, } from "./types/templates.types.js";
 // System
 import { copyDir, getCurrentPath } from "./system.core.mjs";
+// Manual import
+const { moveSync } = fsExtraPkg;
 export function joinPaths(...paths) {
     return [...paths].join(DIRECTORY_SEPARATOR);
 }
@@ -96,20 +99,29 @@ export function replaceCasesInFilesAndFolders(targetDir, name) {
             console.error(error);
         }
         try {
-            renameSync(originalPath, newPath);
+            moveSync(originalPath, newPath);
         }
         catch (error) {
-            console.warn("It was already moved, destination exists");
+            // console.warn("It was already moved, destination exists");
         }
         try {
+            // create the dir if doesn't exists
             if (!existsSync(newPath)) {
                 mkdirSync(newPath);
             }
             writeFileSync(newPath, content);
         }
         catch (error) {
-            console.log("Couldn't write to file", newPath);
+            console.warn("Couldn't write to file", newPath);
             console.error(error);
+        }
+        // safety measure, it should have nothing to delete, but just in case
+        try {
+            unlinkSync(originalPath);
+        }
+        catch (error) {
+            // console.warn("Couldn't remove the original path", newPath);
+            // console.error(error);
         }
         return newPath;
     });
@@ -123,4 +135,12 @@ export function makeFromTemplate({ template, srcDir, name, }) {
         // if so, a comment should be added at the end of the line
         // smart addition
     }
+    console.log();
+    if (success) {
+        console.log("Properly copied the directory");
+    }
+    else {
+        console.log("Something happened while trying to copy the directory");
+    }
+    console.log("Finished!!");
 }

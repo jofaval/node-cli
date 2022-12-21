@@ -19,5 +19,6 @@ const FirstTry: FC<FirstTryProps> = ({ children }) => {
     </FirstTryContainer>
   );
 };
+FirstTry.displayName = "FirstTry";
 
 export default FirstTry;
