@@ -31,7 +31,8 @@
     "ez-read-file": "cat ./examples/file-read/foo-bar.txt",
     "read-file": "node ./scripts/read-file.mjs",
     "hellspawn": "node ./scripts/hellspawn.mjs",
-    "check-structure": "node ./scripts/check-structure.mjs"
+    "check-structure": "node ./scripts/check-structure.mjs",
+    "python-says-hi": "python ./scripts/hello_world.py"
   },
   "keywords": [],
   "author": "",
