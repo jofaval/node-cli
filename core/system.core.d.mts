@@ -10,7 +10,7 @@ type CmdOptions = {
 /**
  * Executes the given command
  */
-declare function cmd(command: string, options?: CmdOptions): void;
+export declare function cmd(command: string, options?: CmdOptions): void;
 
 type SpawnCmdOptions = {
   /** On output success */
@@ -23,7 +23,7 @@ type SpawnCmdOptions = {
   onClose?: (code: number | null) => void;
 };
 
-declare function spawnCmd(
+export declare function spawnCmd(
   command: string,
   args?: string[],
   options?: SpawnCmdOptions
@@ -32,12 +32,12 @@ declare function spawnCmd(
 /**
  * Recursively copies one dir to another
  */
-declare function copyDir(origin: string, target: string): boolean;
+export declare function copyDir(origin: string, target: string): boolean;
 
 /**
  * Replaces content in a file
  */
-declare function replace(
+export declare function replace(
   filepath: string,
   haystack: String,
   needle: string
