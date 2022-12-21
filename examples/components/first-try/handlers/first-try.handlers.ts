@@ -16,13 +16,13 @@ type FirstTryLoadProps = Pick<
   "state" | "setState"
 >;
 
-const FirstTryLoad = ({ state, setState }: FirstTryLoadProps) => {
+const firstTryLoad = ({ state, setState }: FirstTryLoadProps) => {
   //
 };
 
 type FirstTryCleanUpProps = Pick<UseFirstTryHandlersProps, "state">;
 
-const FirstTryCleanUp = ({ state }: FirstTryCleanUpProps) => {
+const firstTryCleanUp = ({ state }: FirstTryCleanUpProps) => {
   //
 };
 
@@ -30,6 +30,6 @@ export const useFirstTryHandlers = ({
   state,
   setState,
 }: UseFirstTryHandlersProps): UseFirstTryHandlersResponse => ({
-  onFirstTryLoad: () => FirstTryLoad({ state, setState }),
-  onFirstTryCleanUp: () => FirstTryCleanUp({ state }),
+  onFirstTryLoad: () => firstTryLoad({ state, setState }),
+  onFirstTryCleanUp: () => firstTryCleanUp({ state }),
 });

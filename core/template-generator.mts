@@ -61,13 +61,9 @@ export function generateDirs({
 const WORD_SEPARATOR = "-";
 
 export function toCamelCase(name: string): string {
-  return capitalizeArray(name.split(WORD_SEPARATOR))
-    .split("")
-    .map((character, index) => {
-      if (index == 0) character.toLocaleLowerCase();
-      return character;
-    })
-    .join("");
+  const pascalCase = capitalizeArray(name.split(WORD_SEPARATOR));
+
+  return (pascalCase[0]?.toLocaleLowerCase() ?? "") + pascalCase.slice(1);
 }
 
 export function toKebabCase(name: string): string {

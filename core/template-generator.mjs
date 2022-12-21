@@ -25,14 +25,8 @@ export function generateDirs({ template, srcDir = null, }) {
 }
 const WORD_SEPARATOR = "-";
 export function toCamelCase(name) {
-    return capitalizeArray(name.split(WORD_SEPARATOR))
-        .split("")
-        .map((character, index) => {
-        if (index == 0)
-            character.toLocaleLowerCase();
-        return character;
-    })
-        .join("");
+    const pascalCase = capitalizeArray(name.split(WORD_SEPARATOR));
+    return (pascalCase[0]?.toLocaleLowerCase() ?? "") + pascalCase.slice(1);
 }
 export function toKebabCase(name) {
     // this one should be the default naming
