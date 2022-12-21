@@ -14,7 +14,7 @@
     "write": "node ./scripts/write-to-file.mjs",
     "copy-dir": "echo TODO: implement",
     "create-template": "echo TODO: implement",
-    "make:from": "echo TODO: implement from template",
+    "make:from": "node ./scripts/make-from.mjs",
     "component": "pnpm run make:from --template=component",
     "container": "pnpm run make:from --template=container",
     "service": "pnpm run make:from --template=service",

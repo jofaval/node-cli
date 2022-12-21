@@ -1,12 +1,25 @@
-import { readdirSync, readFileSync, rename, writeFileSync } from "fs";
-import { DIRECTORY_SEPARATOR, TEMPLATES_DIR } from "./constants/core.constants";
-import { capitalizeArray } from "./helpers/strings.helpers";
-import { CaseDictionary, TemplatesTargetDirs, } from "./types/templates.types";
-export function generateTargetDir({ template, name, }) {
+// Vendors
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync, } from "fs";
+// Constants
+import { DIRECTORY_SEPARATOR, TARGET_DIR, TEMPLATES_DIR, } from "./constants/core.constants.js";
+// Helpers
+import { capitalizeArray } from "./helpers/strings.helpers.js";
+// Types
+import { CaseDictionary, TemplatesTargetDirs, } from "./types/templates.types.js";
+import { copyDir, getCurrentPath } from "./system.core.mjs";
+import pkg from "fs-extra";
+import path from "path";
+const { moveSync } = pkg;
+export function joinPaths(...paths) {
+    return [...paths].join(DIRECTORY_SEPARATOR);
+}
+export function generateDirs({ template, srcDir = null, }) {
     const targetFolder = TemplatesTargetDirs[template];
-    const targetDir = targetFolder;
-    // TODO: implement
-    return targetDir;
+    const __dirname = getCurrentPath();
+    const templateDir = joinPaths(__dirname, TEMPLATES_DIR, targetFolder);
+    const baseDir = srcDir ?? TARGET_DIR;
+    const targetDir = joinPaths(__dirname, "..", baseDir, targetFolder);
+    return { templateDir, targetDir };
 }
 const WORD_SEPARATOR = "-";
 export function toCamelCase(name) {
@@ -51,28 +64,62 @@ export function replaceCasingPlaceholders(content, name) {
         return text.replaceAll(_case, CaseDictionaryTransformer[_case](name));
     }, content);
 }
-export function caseReplacer(targetDir, name) {
-    const files = readdirSync(targetDir);
-    const newFilesMap = new Map(files.map((file) => [
-        file,
-        { newPath: replaceCasingPlaceholders(file, name), content: "" },
-    ]));
+/**
+ * @source https://coderrocketfuel.com/article/recursively-list-all-the-files-in-a-directory-using-node-js
+ */
+function getAllFiles(dirPath, arrayOfFiles) {
+    const files = readdirSync(dirPath);
+    arrayOfFiles = arrayOfFiles || [];
     files.forEach((file) => {
-        let content = readFileSync(file, { encoding: "utf-8" });
-        content = replaceCasingPlaceholders(content, name);
+        const newPathName = path.join(dirPath, "/", file);
+        if (statSync(dirPath + "/" + file).isDirectory()) {
+            arrayOfFiles = getAllFiles(newPathName, arrayOfFiles);
+        }
+        else {
+            arrayOfFiles.push(newPathName);
+        }
     });
-    newFilesMap.forEach(({ newPath, content }, oldPath) => {
-        rename(oldPath, newPath, () => {
+    return arrayOfFiles;
+}
+export function replaceCasesInFilesAndFolders(targetDir, name) {
+    const files = getAllFiles(targetDir, []);
+    files.forEach((filename) => {
+        const originalPath = filename;
+        const newPath = replaceCasingPlaceholders(originalPath, name);
+        console.log({ originalPath, newPath });
+        let content = "";
+        try {
+            content = readFileSync(originalPath, { encoding: "utf-8" });
+            content = replaceCasingPlaceholders(content, name);
+        }
+        catch (error) {
+            console.warn("Couldn't read file", newPath);
+            console.error(error);
+        }
+        try {
+            moveSync(originalPath, newPath, { overwrite: true });
+        }
+        catch (error) {
+            console.warn("It was already moved, destination exists");
+        }
+        try {
+            if (!existsSync(newPath)) {
+                mkdirSync(newPath);
+            }
             writeFileSync(newPath, content);
-        });
+        }
+        catch (error) {
+            console.log("Couldn't write to file", newPath);
+            console.error(error);
+        }
+        return newPath;
     });
 }
-export function makeFromTemplate(props) {
-    const originalDir = [TEMPLATES_DIR, TemplatesTargetDirs[props.template]].join(DIRECTORY_SEPARATOR);
-    const targetDir = generateTargetDir(props);
-    const success = copyDir(originalDir, targetDir);
+export function makeFromTemplate({ template, srcDir, name, }) {
+    const { templateDir, targetDir } = generateDirs({ template, srcDir });
+    const success = copyDir(templateDir, targetDir);
     if (success) {
-        caseReplacer(targetDir, props.name);
+        replaceCasesInFilesAndFolders(targetDir, name);
         // TODO: add element to the index.ts?
         // if so, a comment should be added at the end of the line
         // smart addition

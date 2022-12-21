@@ -42,3 +42,8 @@ export declare function replace(
   haystack: String,
   needle: string
 ): void;
+
+/**
+ * Gets the current path, which will be the the core's path
+ */
+export declare function getCurrentPath(): string;

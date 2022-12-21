@@ -1,27 +1,60 @@
-import { readdirSync, readFileSync, rename, writeFileSync } from "fs";
-import { DIRECTORY_SEPARATOR, TEMPLATES_DIR } from "./constants/core.constants";
-import { capitalizeArray } from "./helpers/strings.helpers";
+// Vendors
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  rename,
+  statSync,
+  writeFileSync,
+} from "fs";
+// Constants
+import {
+  DIRECTORY_SEPARATOR,
+  TARGET_DIR,
+  TEMPLATES_DIR,
+} from "./constants/core.constants.js";
+// Helpers
+import { capitalizeArray } from "./helpers/strings.helpers.js";
+// Types
 import {
   CaseDictionary,
   Template,
   TemplatesTargetDirs,
-} from "./types/templates.types";
+} from "./types/templates.types.js";
+import { copyDir, getCurrentPath } from "./system.core.mjs";
+import pkg from "fs-extra";
+import path from "path";
+import { dir } from "console";
+const { moveSync } = pkg;
 
-export type GenerateTargetDirProps = {
+export type GenerateDirsProps = {
   template: Template;
-  name: string;
+  srcDir?: string | null | undefined;
 };
 
-export function generateTargetDir({
+export type GenerateDirsResponse = {
+  templateDir: string;
+  targetDir: string;
+};
+
+export function joinPaths(...paths: string[]): string {
+  return [...paths].join(DIRECTORY_SEPARATOR);
+}
+
+export function generateDirs({
   template,
-  name,
-}: GenerateTargetDirProps): string {
+  srcDir = null,
+}: GenerateDirsProps): GenerateDirsResponse {
   const targetFolder = TemplatesTargetDirs[template];
+  const __dirname = getCurrentPath();
 
-  const targetDir = targetFolder;
-  // TODO: implement
+  const templateDir = joinPaths(__dirname, TEMPLATES_DIR, targetFolder);
 
-  return targetDir;
+  const baseDir = srcDir ?? TARGET_DIR;
+  const targetDir = joinPaths(__dirname, "..", baseDir, targetFolder);
+
+  return { templateDir, targetDir };
 }
 
 const WORD_SEPARATOR = "-";
@@ -79,38 +112,79 @@ export function replaceCasingPlaceholders(
   }, content);
 }
 
-export function caseReplacer(targetDir: string, name: string) {
-  const files = readdirSync(targetDir);
+/**
+ * @source https://coderrocketfuel.com/article/recursively-list-all-the-files-in-a-directory-using-node-js
+ */
+function getAllFiles(dirPath: string, arrayOfFiles: string[]): string[] {
+  const files = readdirSync(dirPath);
 
-  const newFilesMap = new Map<string, { newPath: string; content: string }>(
-    files.map((file) => [
-      file,
-      { newPath: replaceCasingPlaceholders(file, name), content: "" },
-    ])
-  );
+  arrayOfFiles = arrayOfFiles || [];
 
   files.forEach((file) => {
-    let content = readFileSync(file, { encoding: "utf-8" });
-    content = replaceCasingPlaceholders(content, name);
+    const newPathName = path.join(dirPath, "/", file);
+    if (statSync(dirPath + "/" + file).isDirectory()) {
+      arrayOfFiles = getAllFiles(newPathName, arrayOfFiles);
+    } else {
+      arrayOfFiles.push(newPathName);
+    }
   });
 
-  newFilesMap.forEach(({ newPath, content }, oldPath) => {
-    rename(oldPath, newPath, () => {
+  return arrayOfFiles;
+}
+
+export function replaceCasesInFilesAndFolders(targetDir: string, name: string) {
+  const files = getAllFiles(targetDir, []);
+  files.forEach((filename) => {
+    const originalPath = filename;
+    const newPath = replaceCasingPlaceholders(originalPath, name);
+
+    console.log({ originalPath, newPath });
+
+    let content = "";
+    try {
+      content = readFileSync(originalPath, { encoding: "utf-8" });
+      content = replaceCasingPlaceholders(content, name);
+    } catch (error) {
+      console.warn("Couldn't read file", newPath);
+      console.error(error);
+    }
+
+    try {
+      moveSync(originalPath, newPath, { overwrite: true });
+    } catch (error) {
+      console.warn("It was already moved, destination exists");
+    }
+
+    try {
+      if (!existsSync(newPath)) {
+        mkdirSync(newPath);
+      }
+
       writeFileSync(newPath, content);
-    });
+    } catch (error) {
+      console.log("Couldn't write to file", newPath);
+      console.error(error);
+    }
+
+    return newPath;
   });
 }
 
-export function makeFromTemplate(props: GenerateTargetDirProps) {
-  const originalDir = [TEMPLATES_DIR, TemplatesTargetDirs[props.template]].join(
-    DIRECTORY_SEPARATOR
-  );
-  const targetDir = generateTargetDir(props);
+type MakeFromTemplateProps = GenerateDirsProps & {
+  name: string;
+};
 
-  const success = copyDir(originalDir, targetDir);
+export function makeFromTemplate({
+  template,
+  srcDir,
+  name,
+}: MakeFromTemplateProps) {
+  const { templateDir, targetDir } = generateDirs({ template, srcDir });
+
+  const success = copyDir(templateDir, targetDir);
 
   if (success) {
-    caseReplacer(targetDir, props.name);
+    replaceCasesInFilesAndFolders(targetDir, name);
 
     // TODO: add element to the index.ts?
     // if so, a comment should be added at the end of the line

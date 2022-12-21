@@ -1,6 +1,11 @@
+// Vendors
 import { exec, spawn } from "node:child_process";
 import { writeFileSync, readFileSync } from "fs";
-import { moveSync } from "fs-extra";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+// fs-extra, safe import
+import pkg from "fs-extra";
+const { copySync } = pkg;
 
 /**
  * Executes the given command in the shell, a callback can be passed to process the output
@@ -85,7 +90,7 @@ export function spawnCmd(
  */
 export function copyDir(origin, target) {
   try {
-    moveSync(origin, target, { overwrite: true | false });
+    copySync(origin, target, { overwrite: true | false });
     return true;
   } catch (error) {
     console.error(error);
@@ -105,4 +110,14 @@ export function replace(filepath, haystack, needle) {
     .replaceAll(haystack, needle);
 
   writeFileSync(filepath, content, { encoding: "utf-8" });
+}
+
+/**
+ * @returns {string}
+ */
+export function getCurrentPath() {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+
+  return __dirname;
 }
