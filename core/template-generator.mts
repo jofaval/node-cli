@@ -11,13 +11,10 @@ import {
 import fsExtraPkg from "fs-extra";
 import path from "path";
 // Constants
-import {
-  DIRECTORY_SEPARATOR,
-  TARGET_DIR,
-  TEMPLATES_DIR,
-} from "./constants/core.constants.js";
+import { TARGET_DIR, TEMPLATES_DIR } from "./constants/core.constants.js";
 // Helpers
 import { capitalizeArray } from "./helpers/strings.helpers.js";
+import { joinPaths } from "./helpers/system.helpers.js";
 // Types
 import {
   CaseDictionary,
@@ -38,10 +35,6 @@ export type GenerateDirsResponse = {
   templateDir: string;
   targetDir: string;
 };
-
-export function joinPaths(...paths: string[]): string {
-  return [...paths].join(DIRECTORY_SEPARATOR);
-}
 
 export function generateDirs({
   template,

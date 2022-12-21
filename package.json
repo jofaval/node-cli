@@ -13,7 +13,7 @@
     "ez-write": "node ./scripts/ez-write-to-file.mjs",
     "write": "node ./scripts/write-to-file.mjs",
     "copy-dir": "echo TODO: implement",
-    "create-template": "echo TODO: implement",
+    "create-template": "node ./scripts/create-template.mjs",
     "make:from": "node ./scripts/make-from.mjs",
     "component": "pnpm run make:from --template=component",
     "container": "pnpm run make:from --template=container",

@@ -3,18 +3,16 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, unlinkSync,
 import fsExtraPkg from "fs-extra";
 import path from "path";
 // Constants
-import { DIRECTORY_SEPARATOR, TARGET_DIR, TEMPLATES_DIR, } from "./constants/core.constants.js";
+import { TARGET_DIR, TEMPLATES_DIR } from "./constants/core.constants.js";
 // Helpers
 import { capitalizeArray } from "./helpers/strings.helpers.js";
+import { joinPaths } from "./helpers/system.helpers.js";
 // Types
 import { CaseDictionary, TemplatesTargetDirs, } from "./types/templates.types.js";
 // System
 import { copyDir, getCurrentPath } from "./system.core.mjs";
 // Manual import
 const { moveSync } = fsExtraPkg;
-export function joinPaths(...paths) {
-    return [...paths].join(DIRECTORY_SEPARATOR);
-}
 export function generateDirs({ template, srcDir = null, }) {
     const targetFolder = TemplatesTargetDirs[template];
     const __dirname = getCurrentPath();
