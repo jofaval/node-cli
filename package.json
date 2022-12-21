@@ -12,7 +12,7 @@
     "args-parser": "node ./scripts/args-parser.mjs 1 2 --specialArg=test --flag 3",
     "ez-write": "node ./scripts/ez-write-to-file.mjs",
     "write": "node ./scripts/write-to-file.mjs",
-    "copy-dir": "echo TODO: implement",
+    "copy-dir": "node ./scripts/copy-dir.mjs",
     "create-template": "node ./scripts/create-template.mjs",
     "make:from": "node ./scripts/make-from.mjs",
     "component": "pnpm run make:from --template=component",
