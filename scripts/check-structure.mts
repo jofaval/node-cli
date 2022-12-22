@@ -5,7 +5,7 @@ import { getAllFiles, joinPaths } from "../core/helpers/system.helpers.js";
 // Constants
 import { TARGET_DIR } from "../core/constants/core.constants.js";
 // Core
-import { checkForInvalidFiles } from "../core/structure-validator.mjs";
+import { checkForInvalidFiles } from "../core/entrypoints/structure-validator/structure-validator.mjs";
 
 type Args = {
   /** Similar to the machine learning concept */

@@ -23,7 +23,7 @@ type CheckForInvalidFilesOptions = {
   flat?: boolean | undefined;
 };
 
-type CheckForInvalidFilesProps = {
+export type CheckForInvalidFilesProps = {
   files: string[];
   options?: CheckForInvalidFilesOptions;
 };
