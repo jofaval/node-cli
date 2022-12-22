@@ -16,6 +16,10 @@ import {
 describe("Case utilities", () => {
   const name = "Template-name-with-spaces";
 
+  it.concurrent("should sanitize a word", () => {
+    expect(sanitize("healthy")).toBe("healthy");
+  });
+
   it.concurrent("should replace case in file path", () => {
     expect(
       replaceCasingPlaceholders(

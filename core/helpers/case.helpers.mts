@@ -8,7 +8,7 @@ export const WORD_SEPARATOR = "-";
 export function toCamelCase(name: string): string {
   const pascalCase = capitalizeArray(name.split(WORD_SEPARATOR));
 
-  return (pascalCase[0]?.toLocaleLowerCase() ?? "") + pascalCase.slice(1);
+  return pascalCase[0]!.toLocaleLowerCase() + pascalCase.slice(1);
 }
 
 export function toKebabCase(name: string): string {

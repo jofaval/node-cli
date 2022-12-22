@@ -4,7 +4,11 @@ import { describe, it, expect } from "vitest";
 import { capitalize, capitalizeArray } from "../strings.helpers";
 
 describe("String utilities", () => {
-  it("should", () => {
-    expect(false).toBe(true);
+  it.concurrent("should capitalize a word", () => {
+    expect(capitalize("tRICKY")).toBe("Tricky");
+  });
+
+  it.concurrent("should capitalize a multi-word", () => {
+    expect(capitalizeArray(["tRICKY", "oNE"])).toBe("TrickyOne");
   });
 });

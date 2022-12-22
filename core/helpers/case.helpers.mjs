@@ -5,7 +5,7 @@ import { CaseDictionary } from "../types/templates.types.js";
 export const WORD_SEPARATOR = "-";
 export function toCamelCase(name) {
     const pascalCase = capitalizeArray(name.split(WORD_SEPARATOR));
-    return (pascalCase[0]?.toLocaleLowerCase() ?? "") + pascalCase.slice(1);
+    return pascalCase[0].toLocaleLowerCase() + pascalCase.slice(1);
 }
 export function toKebabCase(name) {
     // this one should be the default naming

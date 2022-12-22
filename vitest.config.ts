@@ -8,6 +8,7 @@ export default defineConfig({
       ...configDefaults.exclude,
       "**/core/templates/**",
       "**/examples/**",
+      "**/ignore/**",
     ],
   },
 });
