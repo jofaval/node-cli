@@ -23,6 +23,9 @@ export function toSerpentCase(name) {
 export function toUpperCase(name) {
     return name.split(WORD_SEPARATOR).join("_").toLocaleUpperCase();
 }
+export function toSpaceCase(name) {
+    return name.split(WORD_SEPARATOR).join(" ").toLocaleLowerCase();
+}
 export const CaseDictionaryTransformer = {
     [CaseDictionary.CAMEL_CASE]: toCamelCase,
     [CaseDictionary.KEBAB_CASE]: toKebabCase,
@@ -30,6 +33,7 @@ export const CaseDictionaryTransformer = {
     [CaseDictionary.PASCAL_CASE]: toPascalCase,
     [CaseDictionary.SERPENT_CASE]: toSerpentCase,
     [CaseDictionary.UPPER_CASE]: toUpperCase,
+    [CaseDictionary.SPACE_CASE]: toSpaceCase,
 };
 export function sanitize(name) {
     return encodeURI(name);

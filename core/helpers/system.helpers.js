@@ -1,8 +1,10 @@
 // Vendors
-import { readdirSync, statSync } from "fs-extra";
+import fileExtraPackage from "fs-extra";
 import path from "path";
 // Constants
 import { DIRECTORY_SEPARATOR } from "../constants/core.constants.js";
+// Safe import for CommonJS packages
+const { readdirSync, statSync } = fileExtraPackage;
 export function joinPaths(...paths) {
     return [...paths].join(DIRECTORY_SEPARATOR);
 }

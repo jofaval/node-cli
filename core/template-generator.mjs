@@ -5,9 +5,9 @@ import fsExtraPkg from "fs-extra";
 import { TARGET_DIR, TEMPLATES_DIR } from "./constants/core.constants.js";
 // Helpers
 import { getAllFiles, joinPaths } from "./helpers/system.helpers.js";
-import { replaceCasingPlaceholders, } from "./helpers/case.helpers.mjs";
+import { replaceCasingPlaceholders } from "./helpers/case.helpers.mjs";
 // Types
-import { TemplatesTargetDirs, } from "./types/templates.types.js";
+import { TemplatesTargetDirs } from "./types/templates.types.js";
 // System
 import { copyDir, getCurrentPath } from "./system.core.mjs";
 // Manual import
