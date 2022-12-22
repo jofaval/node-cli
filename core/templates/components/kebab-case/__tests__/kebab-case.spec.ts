@@ -1,7 +1,7 @@
 // Vendors
 import { describe, expect, it } from "vitest";
 
-describe("PascalCase component tests", () => {
+describe("space case component tests", () => {
   it("should ...", () => {
     expect(false).toBe(true);
   });

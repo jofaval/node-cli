@@ -25,4 +25,5 @@ export const CaseDictionary = {
   PASCAL_CASE: "PascalCase",
   LOWER_CASE: "lowercase",
   UPPER_CASE: "UPPER_CASE",
+  SPACE_CASE: "space case",
 } as const;

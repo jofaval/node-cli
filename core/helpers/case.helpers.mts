@@ -32,6 +32,10 @@ export function toUpperCase(name: string): string {
   return name.split(WORD_SEPARATOR).join("_").toLocaleUpperCase();
 }
 
+export function toSpaceCase(name: string): string {
+  return name.split(WORD_SEPARATOR).join(" ").toLocaleLowerCase();
+}
+
 export const CaseDictionaryTransformer = {
   [CaseDictionary.CAMEL_CASE]: toCamelCase,
   [CaseDictionary.KEBAB_CASE]: toKebabCase,
@@ -39,6 +43,7 @@ export const CaseDictionaryTransformer = {
   [CaseDictionary.PASCAL_CASE]: toPascalCase,
   [CaseDictionary.SERPENT_CASE]: toSerpentCase,
   [CaseDictionary.UPPER_CASE]: toUpperCase,
+  [CaseDictionary.SPACE_CASE]: toSpaceCase,
 } as const;
 
 export function sanitize(name: string): string {

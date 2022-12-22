@@ -6,7 +6,7 @@ import {
   fetchSinglePascalCase,
 } from "../kebab-case.service";
 
-describe("PascalCase services", () => {
+describe("space case services", () => {
   it("should ...", () => {
     const service = fetchAllPascalCase();
 

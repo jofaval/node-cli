@@ -6,7 +6,7 @@ import {
   useFetchSinglePascalCase,
 } from "../kebab-case.query";
 
-describe("PascalCase queries", () => {
+describe("space case queries", () => {
   it("should ...", () => {
     const query = useFetchAllPascalCase();
 

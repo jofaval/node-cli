@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 // Services
 import {} from "../kebab-case.utils";
 
-describe("PascalCase utilities", () => {
+describe("space case utilities", () => {
   it("should ...", () => {
     expect(false).toBe(true);
   });
