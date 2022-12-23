@@ -1,4 +1,6 @@
 // Vendors
+import { readFileSync } from "fs";
+import path from "path";
 import { describe, it, expect } from "vitest";
 // Helpers
 import {
@@ -12,6 +14,8 @@ import {
   toSpaceCase,
   toUpperCase,
 } from "../case.helpers.mjs";
+
+const MOCK_PATH = path.join(__dirname, "../__mocks__/case");
 
 describe("Case utilities", () => {
   const name = "Template-name-with-spaces";
@@ -32,23 +36,15 @@ describe("Case utilities", () => {
   it.concurrent("should replace case in multiline text", () => {
     expect(
       replaceCasingPlaceholders(
-        [
-          "// space case",
-          "",
-          "const PascalCase = () => {",
-          "return <div className='kebab-case'></div>",
-          "}",
-        ].join("\n"),
+        readFileSync(`${MOCK_PATH}/raw-file.case.mock.tsx`, {
+          encoding: "utf-8",
+        }),
         "foo-bar"
       )
     ).toBe(
-      [
-        "// foo bar",
-        "",
-        "const FooBar = () => {",
-        "return <div className='foo-bar'></div>",
-        "}",
-      ].join("\n")
+      readFileSync(`${MOCK_PATH}/parsed-file.case.mock.tsx`, {
+        encoding: "utf-8",
+      })
     );
   });
 
