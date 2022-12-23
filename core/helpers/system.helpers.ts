@@ -16,22 +16,21 @@ export function joinPaths(...paths: string[]): string {
  */
 export function getAllFiles(
   dirPath: string,
-  arrayOfFiles: string[] = []
+  arrayOfFiles?: string[]
 ): string[] {
   const files = readdirSync(dirPath);
-
-  arrayOfFiles = arrayOfFiles || [];
+  let array = arrayOfFiles ?? [];
 
   files.forEach((file) => {
     const newPathName = path.join(dirPath, "/", file);
     if (statSync(dirPath + "/" + file).isDirectory()) {
-      arrayOfFiles = getAllFiles(newPathName, arrayOfFiles);
+      array = getAllFiles(newPathName, array);
     } else {
-      arrayOfFiles.push(newPathName);
+      array.push(newPathName);
     }
   });
 
-  return arrayOfFiles;
+  return array;
 }
 
 export default { joinPaths };

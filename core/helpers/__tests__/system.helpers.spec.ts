@@ -5,30 +5,50 @@ import { describe, it, expect } from "vitest";
 import { getAllFiles, joinPaths } from "../system.helpers";
 
 describe("System utilities", () => {
-  it("should join paths", () => {
+  it.concurrent("should join paths", () => {
     expect(joinPaths("hello", "world", "foo", "bar")).toBe(
       "hello/world/foo/bar"
     );
   });
 
-  it("should get the file structure", () => {
+  it.concurrent("should get the file structure", () => {
     const mocksBasename = path.join(
-      path.dirname(path.dirname(__dirname)),
-      "__mocks__"
+      path.dirname(__dirname),
+      "__mocks__",
+      "system"
     );
 
     const filePaths = getAllFiles(
       path.join(__dirname, "../__mocks__/system")
-    ).map((file) => file.replace(mocksBasename, ""));
+    ).map((file) => file.replace(mocksBasename, "").slice(1));
 
     expect(filePaths).toEqual(
-      expect.arrayContaining([
-        "example/style.css",
-        "example/sub-nested/index.ts",
-        "main.scss",
-        "nested/root.tsx",
-        "root.ts",
-      ])
+      expect.arrayContaining(
+        [
+          ["example", "style.css"],
+          ["example", "sub-nested", "index.ts"],
+          ["main.scss"],
+          ["nested", "root.tsx"],
+          ["root.ts"],
+        ].map((candidate) => path.join(...candidate))
+      )
     );
+  });
+
+  it.concurrent("should be conscious of the initial array", () => {
+    expect(
+      getAllFiles(path.join(__dirname, "../__mocks__/system"), [
+        "first",
+        "second",
+      ])
+    ).toHaveLength(7);
+
+    expect(
+      getAllFiles(path.join(__dirname, "../__mocks__/system"), undefined)
+    ).toHaveLength(5);
+
+    expect(
+      getAllFiles(path.join(__dirname, "../__mocks__/system"), [])
+    ).toHaveLength(5);
   });
 });

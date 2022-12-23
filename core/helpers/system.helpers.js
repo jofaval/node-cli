@@ -11,18 +11,18 @@ export function joinPaths(...paths) {
 /**
  * @source https://coderrocketfuel.com/article/recursively-list-all-the-files-in-a-directory-using-node-js
  */
-export function getAllFiles(dirPath, arrayOfFiles = []) {
+export function getAllFiles(dirPath, arrayOfFiles) {
     const files = readdirSync(dirPath);
-    arrayOfFiles = arrayOfFiles || [];
+    let array = arrayOfFiles ?? [];
     files.forEach((file) => {
         const newPathName = path.join(dirPath, "/", file);
         if (statSync(dirPath + "/" + file).isDirectory()) {
-            arrayOfFiles = getAllFiles(newPathName, arrayOfFiles);
+            array = getAllFiles(newPathName, array);
         }
         else {
-            arrayOfFiles.push(newPathName);
+            array.push(newPathName);
         }
     });
-    return arrayOfFiles;
+    return array;
 }
 export default { joinPaths };
