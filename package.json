@@ -32,7 +32,8 @@
     "read-file": "node ./scripts/read-file.mjs",
     "hellspawn": "node ./scripts/hellspawn.mjs",
     "check-structure": "node ./scripts/check-structure.mjs",
-    "python-says-hi": "python ./scripts/hello_world.py"
+    "python-says-hi": "python ./scripts/hello_world.py",
+    "ls-packages": "go run ./scripts/ls-packages/main.go"
   },
   "keywords": [],
   "author": "",
