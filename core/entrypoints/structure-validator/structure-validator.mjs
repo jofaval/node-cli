@@ -10,14 +10,14 @@ export function doesFileHaveInvalidStructure(file) {
     // it should have one, and of length 3 (when splitted)
     return true;
 }
-export function doesFileHaveInvalidFlatStructure(file) {
+export function doesFileHaveInvalidFlatStructure(file, maxAllowedFlatLevel = 2) {
     throw new Error("TODO: implement");
     // TODO: implement
     return true;
 }
-export function checkForInvalidFiles({ files, options: { earlyStopping, flat } = {}, }) {
+export function checkForInvalidFiles({ files, options: { earlyStopping, flat, maxAllowedFlatLevel } = {}, }) {
     const isFileInvalid = flat
-        ? doesFileHaveInvalidFlatStructure
+        ? (file) => doesFileHaveInvalidFlatStructure(file, maxAllowedFlatLevel)
         : doesFileHaveInvalidStructure;
     if (earlyStopping) {
         const invalidFile = files.find(isFileInvalid);

@@ -12,7 +12,10 @@ export function doesFileHaveInvalidStructure(file: string): boolean {
   return true;
 }
 
-export function doesFileHaveInvalidFlatStructure(file: string): boolean {
+export function doesFileHaveInvalidFlatStructure(
+  file: string,
+  maxAllowedFlatLevel: number = 2
+): boolean {
   throw new Error("TODO: implement");
   // TODO: implement
   return true;
@@ -21,6 +24,7 @@ export function doesFileHaveInvalidFlatStructure(file: string): boolean {
 type CheckForInvalidFilesOptions = {
   earlyStopping?: boolean | undefined;
   flat?: boolean | undefined;
+  maxAllowedFlatLevel?: number | undefined;
 };
 
 export type CheckForInvalidFilesProps = {
@@ -30,10 +34,11 @@ export type CheckForInvalidFilesProps = {
 
 export function checkForInvalidFiles({
   files,
-  options: { earlyStopping, flat } = {},
+  options: { earlyStopping, flat, maxAllowedFlatLevel } = {},
 }: CheckForInvalidFilesProps): string[] {
   const isFileInvalid = flat
-    ? doesFileHaveInvalidFlatStructure
+    ? (file: string) =>
+        doesFileHaveInvalidFlatStructure(file, maxAllowedFlatLevel)
     : doesFileHaveInvalidStructure;
 
   if (earlyStopping) {
